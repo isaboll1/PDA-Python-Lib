@@ -29,7 +29,7 @@ pda = PDA(
 
 The transitions dictionary uses two tuples, with the first one as the key being utilized in the format of the state that's expected, the input being checked, and what is popped from the stack. the result gives you the state to transition, and the inputs that are being pushed to the stack instead.
 
-To read inputs, you can use the method "accepts_inputs": here's and example:
+To read inputs, you can use the method "accepts_inputs": here's an example:
 
 ```python
 strings = ['b', '',  "aaaab", 'abbbb', 'aaaaabbbbb', 'aaabbbbb']
