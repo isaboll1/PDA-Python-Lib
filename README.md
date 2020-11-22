@@ -4,7 +4,7 @@ This is a library which implements pushdown automata within python 3.
 
 usage would be implemented like this:
 
-```
+```python
 from pda import PDA
 
 pda = PDA(
@@ -31,7 +31,7 @@ The transitions dictionary uses two tuples, with the first one as the key being 
 
 To read inputs, you can use the method "accepts_inputs": here's and example:
 
-```
+```python
 strings = ['b', '',  "aaaab", 'abbbb', 'aaaaabbbbb', 'aaabbbbb']
 for string in strings:
     if pda.accepts_input(string):
