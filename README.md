@@ -40,4 +40,6 @@ for string in strings:
         print(string+':', 'rejected')
 ```
 
+The "λ" symbol typically utilized for PDA is represented by an open space " ". 
+
 Further documentation is provided throught the library directly.
