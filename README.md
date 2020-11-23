@@ -40,6 +40,33 @@ for string in strings:
         print(string+':', 'rejected')
 ```
 
+You can read inputs in a stepwise manner to see how the stack changes on each step from transtitons through the PDA, as well as the state that you end up on from the transition.
+
+To do this, use the "read_input_stepwise" method in the library. For example, using the PDA from the last example, if we were to call
+```python
+strings = ['aabbb']
+for string in strings:
+    stepwise = pda.read_input_stepwise(string)
+    for steps in stepwise:
+        print(steps)
+    print('\n')
+```
+The result would be this
+```python
+"""
+('aabbb', ['Z'])
+('(Q0,a,Z):(Q1,aZ)', 'Q1|aZ')
+('(Q1,a,a):(Q2,aa)', 'Q2|aaZ')
+('(Q2,b,a):(Q2, )', 'Q2|aZ')
+('(Q2,b,a):(Q2, )', 'Q2|Z')
+('(Q2,b,Z):(Q3,Z)', 'Q3|Z')
+('', 'Q3')
+"""
+```
+
+looking at the second result from the list, what the syntax means is that from the transtion (Q0, a, Z):(Q1, aZ), the state that transition returns is "Q1", and the stack from the result of the transition is "aZ" (or ['a', 'Z']).
+
+
 The "λ" symbol typically utilized for PDA is represented by an open space " ". 
 
-Further documentation is provided throught the library directly.
+Further documentation is provided through comments in the library.

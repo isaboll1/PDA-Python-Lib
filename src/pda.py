@@ -1,7 +1,6 @@
 # created by isaboll1
 
 class PDA:
-
     # states (Set): a set of all the states that are to be used in the PDA.
     # input_alphabet (Set): a set that contains the inputs that are to be accepted by the input alphabet.
     # stack_alphabet (Set): a set that contains the stack symbols used by the PDA.
@@ -26,7 +25,7 @@ class PDA:
         self.final_states = final_states
 
     # transitions states based on what is defined by the "transition_relation" dictionary
-    def transition_states(self, input_string: str, current_state: str, stack: list):
+    def transition_states(self, input_string: str, current_state: str, stack: list, transition_list: list = []):
         next_state = current_state
         if (len(input_string)):
             input_char = input_string[0]
@@ -40,18 +39,34 @@ class PDA:
                     for symbol in state_and_stack_char[1][::-1]:
                         if symbol in self.stack_alphabet and symbol != ' ':
                             stack.append(symbol)
+                    transition_string = "("+current_state+','+input_char+','+stack_symbol+")"+":"+"("+state_and_stack_char[0]+','+state_and_stack_char[1]+")"
+                    transition_list.append((transition_string, next_state +'|'+ ''.join(stack[::-1])))
                 else:
-                    return current_state
-                return self.transition_states(input_string[1:], next_state, stack)
-        return self.transition_states(" ", next_state, stack)
+                    transition_list.append(('', current_state))
+                    return (current_state, transition_list)
+                return self.transition_states(input_string[1:], next_state, stack, transition_list)
+        return self.transition_states(" ", next_state, stack, transition_list)
 
     # returns (str):  reads the input and returns the final state that the PDA finished on.
     def read_input(self, input_string: str):
         stack = []
+        transition_list = []
         stack.append(self.initial_stack_symbol)
+        transition_list.append((input_string, stack))
         state = self.start_state
-        end_state = self.transition_states(input_string, state, stack)
-        return end_state
+        finished_state = self.transition_states(input_string, state, stack, transition_list)[0]
+        return finished_state
+
+    
+    # returns (lst)[tuple]:  reads the input and returns a list of the transitions taken stepwise.
+    def read_input_stepwise(self, input_string: str):
+        stack = []
+        transition_list = []
+        stack.append(self.initial_stack_symbol)
+        transition_list.append((input_string, stack))
+        state = self.start_state
+        transitions_taken = self.transition_states(input_string, state, stack, transition_list)[1]
+        return transitions_taken
 
     # returns (boolean): checks to see if input is accepted by the PDA.
     def accepts_input(self, input_string: str):
@@ -59,6 +74,8 @@ class PDA:
         if ended_state in self.final_states:
             return True
         return False
+    
+     
 
 
 
