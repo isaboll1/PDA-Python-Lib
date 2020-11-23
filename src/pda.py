@@ -40,12 +40,13 @@ class PDA:
                     for symbol in state_and_stack_char[1][::-1]:
                         if symbol in self.stack_alphabet and symbol != ' ':
                             stack.append(symbol)
-            return self.transition_states(input_string[1:], next_state, stack)
-        return current_state
+                else:
+                    return current_state
+                return self.transition_states(input_string[1:], next_state, stack)
+        return self.transition_states(" ", next_state, stack)
 
     # returns (str):  reads the input and returns the final state that the PDA finished on.
     def read_input(self, input_string: str):
-        input_string += ' '
         stack = []
         stack.append(self.initial_stack_symbol)
         state = self.start_state
