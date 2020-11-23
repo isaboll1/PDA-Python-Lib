@@ -40,7 +40,7 @@ class PDA:
                         if symbol in self.stack_alphabet and symbol != ' ':
                             stack.append(symbol)
                     transition_string = "("+current_state+','+input_char+','+stack_symbol+")"+":"+"("+state_and_stack_char[0]+','+state_and_stack_char[1]+")"
-                    transition_list.append((transition_string, next_state +'|'+ ''.join(stack[::-1])))
+                    transition_list.append((transition_string, input_string[1:]+':'+next_state +'|'+ ''.join(stack[::-1])))
                 else:
                     transition_list.append(('', current_state))
                     return (current_state, transition_list)

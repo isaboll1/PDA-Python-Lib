@@ -40,7 +40,7 @@ for string in strings:
         print(string+':', 'rejected')
 ```
 
-You can read inputs in a stepwise manner to see how the stack changes on each step from transtitons through the PDA, as well as the state that you end up on from the transition.
+You can read inputs in a stepwise manner to see how the stack changes on each step from transtitons through the PDA, as well as the state that you end up on from the transition, and the input that is being processed in the next transition.
 
 To do this, use the "read_input_stepwise" method in the library. For example, using the PDA from the last example, if we were to call
 ```python
@@ -55,16 +55,19 @@ The result would be this
 ```python
 """
 ('aabbb', ['Z'])
-('(Q0,a,Z):(Q1,aZ)', 'Q1|aZ')
-('(Q1,a,a):(Q2,aa)', 'Q2|aaZ')
-('(Q2,b,a):(Q2, )', 'Q2|aZ')
-('(Q2,b,a):(Q2, )', 'Q2|Z')
-('(Q2,b,Z):(Q3,Z)', 'Q3|Z')
+('(Q0,a,Z):(Q1,aZ)', 'abbb:Q1|aZ')
+('(Q1,a,a):(Q2,aa)', 'bbb:Q2|aaZ')
+('(Q2,b,a):(Q2, )', 'bb:Q2|aZ')
+('(Q2,b,a):(Q2, )', 'b:Q2|Z')
+('(Q2,b,Z):(Q3,Z)', ':Q3|Z')
 ('', 'Q3')
 """
 ```
 
-looking at the second result from the list, what the syntax means is that from the transtion (Q0, a, Z):(Q1, aZ), the state that transition returns is "Q1", and the stack from the result of the transition is "aZ" (or ['a', 'Z']).
+looking at the second result from the list, what the syntax means is that from the transtion '(Q0, a, Z):(Q1, aZ)'
+, the state that transition returns is "Q1", and the stack from the result of the transition is "aZ" (or ['a', 'Z']).
+ The input that the transition '(Q1, a, a):(Q2, aa)' will process would be the input 'abbb' that came as a result of the
+ transition '(Q0, a, Z):(Q1, aZ)'.
 
 
 The "λ" symbol typically utilized for PDA is represented by an open space " ". 
