@@ -42,20 +42,20 @@ class PDA:
                     transition_string = "("+current_state+','+input_char+','+stack_symbol+")"+":"+"("+state_and_stack_char[0]+','+state_and_stack_char[1]+")"
                     transition_list.append((transition_string, input_string[1:]+':'+next_state +'|'+ ''.join(stack[::-1])))
                 else:
-                    transition_list.append(('', current_state))
-                    return (current_state, transition_list)
+                    transition_list.append((input_char, current_state))
+                    return input_char, current_state, transition_list
                 return self.transition_states(input_string[1:], next_state, stack, transition_list)
         return self.transition_states(" ", next_state, stack, transition_list)
 
-    # returns (str):  reads the input and returns the final state that the PDA finished on.
+    # returns (str)[tuple]:  reads the input and returns the final input, and the final state that the PDA finished on.
     def read_input(self, input_string: str):
         stack = []
         transition_list = []
         stack.append(self.initial_stack_symbol)
         transition_list.append((input_string, stack))
         state = self.start_state
-        finished_state = self.transition_states(input_string, state, stack, transition_list)[0]
-        return finished_state
+        finished_tuple = self.transition_states(input_string, state, stack, transition_list)
+        return (finished_tuple[0], finished_tuple[1])
 
     
     # returns (lst)[tuple]:  reads the input and returns a list of the transitions taken stepwise.
@@ -65,14 +65,17 @@ class PDA:
         stack.append(self.initial_stack_symbol)
         transition_list.append((input_string, stack))
         state = self.start_state
-        transitions_taken = self.transition_states(input_string, state, stack, transition_list)[1]
+        transitions_taken = self.transition_states(input_string, state, stack, transition_list)[2]
         return transitions_taken
 
     # returns (boolean): checks to see if input is accepted by the PDA.
     def accepts_input(self, input_string: str):
-        ended_state = self.read_input(input_string)
-        if ended_state in self.final_states:
-            return True
+        ended_tuple = self.read_input(input_string)
+        ended_input = ended_tuple[0]
+        ended_state = ended_tuple[1]
+        if ended_input == " ":
+            if ended_state in self.final_states:
+                return True
         return False
     
      
