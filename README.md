@@ -60,7 +60,7 @@ The result would be this
 ('(Q2,b,a):(Q2, )', 'bb:Q2|aZ')
 ('(Q2,b,a):(Q2, )', 'b:Q2|Z')
 ('(Q2,b,Z):(Q3,Z)', ':Q3|Z')
-('', 'Q3')
+(' ', 'Q3')
 """
 ```
 
